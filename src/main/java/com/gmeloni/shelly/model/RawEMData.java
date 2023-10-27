@@ -16,7 +16,15 @@ import java.time.LocalDateTime;
 @Getter
 @EqualsAndHashCode
 public class RawEMData implements Serializable {
-    @Id @Column(name = "sample_timestamp") private LocalDateTime sampleTimestamp;
-    @Column(name = "grid_power") private Double gridPower;
-    @Column(name = "pv_power") private Double pvPower;
+    @Id
+    @Column(name = "sample_timestamp")
+    private LocalDateTime sampleTimestamp;
+    @Column(name = "grid_power")
+    private Double gridPower;
+    @Column(name = "pv_power")
+    private Double pvPower;
+    @Column(name = "grid_voltage")
+    private Double gridVoltage;
+    @Column(name = "pv_voltage")
+    private Double pvVoltage;
 }

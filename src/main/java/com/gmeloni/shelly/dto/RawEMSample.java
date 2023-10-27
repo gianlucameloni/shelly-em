@@ -5,5 +5,8 @@ import lombok.Data;
 
 @Data
 public class RawEMSample {
-    @JsonProperty("power") private Double power;
+    @JsonProperty("power")
+    private Double power;
+    @JsonProperty("voltage")
+    private Double voltage;
 }

@@ -13,8 +13,10 @@ public class RawEMService {
 
     private static final Logger log = LoggerFactory.getLogger(RawEMService.class);
 
-    @Autowired private RestTemplate restTemplate;
-    @Value("${shelly.em.ip}") private String shellyEMAddress;
+    @Autowired
+    private RestTemplate restTemplate;
+    @Value("${shelly.em.ip}")
+    private String shellyEMAddress;
 
     public GetEMStatusResponse getRawEMSamples() {
         return restTemplate.getForObject("http://" + shellyEMAddress + "/status", GetEMStatusResponse.class);
