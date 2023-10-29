@@ -13,4 +13,7 @@ public interface RawEMDataRepository extends CrudRepository<RawEMData, LocalDate
 
     @Query(value = "select * from raw_em_data where sample_timestamp >= ?1 and sample_timestamp < ?2", nativeQuery = true)
     List<RawEMData> findAllBySampleTimestampBetween(LocalDateTime from, LocalDateTime to);
+
+    RawEMData findTopByOrderBySampleTimestampDesc();
+
 }

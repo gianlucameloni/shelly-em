@@ -59,7 +59,7 @@ public class ScheduledService {
         log.info("Saved raw EM data: [{}, {}, {}, {}, {}]", sampleFormatter.format(sampleDateTime), String.format("%.2f", gridPower), String.format("%.2f", pvPower), String.format("%.2f", gridVoltage), String.format("%.2f", pvVoltage));
     }
 
-    @Scheduled(cron = "${raw-em.hourly-aggregation.cron.schedule}", zone = "Europe/Rome")
+    @Scheduled(cron = "${raw-em.hourly-aggregate.cron.schedule}", zone = "Europe/Rome")
     public void processHourlyAggregatedData() {
         final double dt = Double.parseDouble(samplingPeriodInMilliseconds) / 1000 / 3600;
         LocalDateTime fromTimestamp = LocalDateTime.now().minusHours(1).truncatedTo(ChronoUnit.HOURS);

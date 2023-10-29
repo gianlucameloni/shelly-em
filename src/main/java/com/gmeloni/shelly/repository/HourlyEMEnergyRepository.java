@@ -8,5 +8,4 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface HourlyEMEnergyRepository extends CrudRepository<HourlyEMEnergy, LocalDateTime> {
-
 }
