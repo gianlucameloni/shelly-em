@@ -24,7 +24,7 @@ public class HourlyAggregate {
 
     public HourlyAggregate(String hour, Double gridEnergyIn, Double gridEnergyOut, Double pvEnergyIn, Double pvEnergyOut) {
         DecimalFormat dataFormat = new DecimalFormat(ENERGY_DECIMAL_FORMAT);
-        this.hour = Utilities.padLeftWithZeros(hour,2);
+        this.hour = Utilities.padLeftWithZeros(hour, 2);
         this.gridEnergyIn = dataFormat.format(gridEnergyIn);
         this.gridEnergyOut = dataFormat.format(gridEnergyOut);
         this.pvEnergyIn = dataFormat.format(pvEnergyIn);

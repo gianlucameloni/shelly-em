@@ -1,11 +1,9 @@
 package com.gmeloni.shelly.controller;
 
-import com.gmeloni.shelly.Utilities;
 import com.gmeloni.shelly.dto.DailyAggregate;
 import com.gmeloni.shelly.dto.GetLastReadingResponse;
 import com.gmeloni.shelly.dto.HourlyAggregate;
 import com.gmeloni.shelly.dto.MonthlyAggregate;
-import com.gmeloni.shelly.model.RawEMData;
 import com.gmeloni.shelly.service.RawEMService;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalField;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 public class EMController {

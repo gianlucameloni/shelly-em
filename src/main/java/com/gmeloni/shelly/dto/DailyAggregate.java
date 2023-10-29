@@ -24,7 +24,7 @@ public class DailyAggregate {
 
     public DailyAggregate(String day, Double gridEnergyIn, Double gridEnergyOut, Double pvEnergyIn, Double pvEnergyOut) {
         DecimalFormat dataFormat = new DecimalFormat(ENERGY_DECIMAL_FORMAT);
-        this.day = Utilities.padLeftWithZeros(day,2);
+        this.day = Utilities.padLeftWithZeros(day, 2);
         this.gridEnergyIn = dataFormat.format(gridEnergyIn);
         this.gridEnergyOut = dataFormat.format(gridEnergyOut);
         this.pvEnergyIn = dataFormat.format(pvEnergyIn);
