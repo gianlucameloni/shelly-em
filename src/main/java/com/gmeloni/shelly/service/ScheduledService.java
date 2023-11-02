@@ -19,15 +19,17 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.gmeloni.shelly.Constants.DATE_AND_TIME_FORMAT;
+
 @Service
 public class ScheduledService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    private final DateTimeFormatter sampleFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final DateTimeFormatter hourlyAggregationFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter sampleFormatter = DateTimeFormatter.ofPattern(DATE_AND_TIME_FORMAT);
+    private final DateTimeFormatter hourlyAggregationFormatter = DateTimeFormatter.ofPattern(DATE_AND_TIME_FORMAT);
 
     @Autowired
-    private RawEMService rawEMService;
+    private RawEMDataService rawEMDataService;
     @Autowired
     private RawEMDataRepository rawEmDataRepository;
     @Autowired
@@ -39,7 +41,7 @@ public class ScheduledService {
 
     @Scheduled(fixedRateString = "${raw-em.sampling.period.milliseconds}")
     public void processRawEMData() {
-        GetEMStatusResponse getEMStatusResponse = rawEMService.getRawEMSamples();
+        GetEMStatusResponse getEMStatusResponse = rawEMDataService.getRawEMSamples();
         LocalDateTime sampleDateTime = LocalDateTime.ofInstant(
                 Instant.ofEpochSecond(getEMStatusResponse.getUnixTime()),
                 TimeZone.getTimeZone("Europe/Rome").toZoneId()

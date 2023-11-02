@@ -1,4 +1,4 @@
-package com.gmeloni.shelly.dto;
+package com.gmeloni.shelly.dto.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmeloni.shelly.model.RawEMData;
@@ -6,8 +6,8 @@ import lombok.Data;
 
 import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
+import static com.gmeloni.shelly.Constants.DATE_AND_TIME_FORMAT;
 import static com.gmeloni.shelly.Constants.POWER_AND_VOLTAGE_DECIMAL_FORMAT;
 
 @Data
@@ -25,7 +25,7 @@ public class GetLastReadingResponse {
     private String pvVoltage;
 
     public GetLastReadingResponse(RawEMData rawEMData) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_AND_TIME_FORMAT);
         DecimalFormat dataFormat = new DecimalFormat(POWER_AND_VOLTAGE_DECIMAL_FORMAT);
         this.sampleTimestamp = dateTimeFormatter.format(rawEMData.getSampleTimestamp());
         this.gridPower = dataFormat.format(rawEMData.getGridPower());

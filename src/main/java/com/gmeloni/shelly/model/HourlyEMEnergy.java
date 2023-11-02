@@ -1,9 +1,9 @@
 package com.gmeloni.shelly.model;
 
-import com.gmeloni.shelly.dto.DailyAggregate;
-import com.gmeloni.shelly.dto.EnergyTotals;
-import com.gmeloni.shelly.dto.HourlyAggregate;
-import com.gmeloni.shelly.dto.MonthlyAggregate;
+import com.gmeloni.shelly.dto.db.DailyAggregate;
+import com.gmeloni.shelly.dto.db.EnergyTotals;
+import com.gmeloni.shelly.dto.db.HourlyAggregate;
+import com.gmeloni.shelly.dto.db.MonthlyAggregate;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -52,14 +52,45 @@ import java.time.LocalDateTime;
         }
 )
 @NamedNativeQuery(
+        name = "SelectTotalsByYearMonthDay",
+        query = """
+                select
+                    sum(grid_energy_in) as grid_energy_in,
+                    sum(grid_energy_out) as grid_energy_out,
+                    sum(pv_energy_in) as pv_energy_in,
+                    sum(pv_energy_out) as pv_energy_out
+                from
+                    hourly_em_energy
+                where
+                    year(from_timestamp) = year(to_date(:filterDate,'yyyy-MM-dd')) and
+                    month(from_timestamp) = month(to_date(:filterDate,'yyyy-MM-dd')) and
+                    day(from_timestamp) = day(to_date(:filterDate,'yyyy-MM-dd'))
+                """,
+        resultSetMapping = "SelectTotalsByYearMonthDayMapping"
+)
+@SqlResultSetMapping(
+        name = "SelectTotalsByYearMonthDayMapping",
+        classes = {
+                @ConstructorResult(
+                        columns = {
+                                @ColumnResult(name = "grid_energy_in", type = Double.class),
+                                @ColumnResult(name = "grid_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_in", type = Double.class),
+                                @ColumnResult(name = "pv_energy_out", type = Double.class),
+                        },
+                        targetClass = EnergyTotals.class
+                )
+        }
+)
+@NamedNativeQuery(
         name = "SelectDailyAggregateByYearMonth",
         query = """
                 select
                     day(from_timestamp) as day,
-                    sum(grid_energy_in)/1000 as grid_energy_in,
-                    sum(grid_energy_out)/1000 as grid_energy_out,
-                    sum(pv_energy_in)/1000 as pv_energy_in,
-                    sum(pv_energy_out)/1000 as pv_energy_out
+                    sum(grid_energy_in) as grid_energy_in,
+                    sum(grid_energy_out) as grid_energy_out,
+                    sum(pv_energy_in) as pv_energy_in,
+                    sum(pv_energy_out) as pv_energy_out
                 from
                     hourly_em_energy
                 where
@@ -77,7 +108,7 @@ import java.time.LocalDateTime;
         classes = {
                 @ConstructorResult(
                         columns = {
-                                @ColumnResult(name = "date", type = String.class),
+                                @ColumnResult(name = "day", type = String.class),
                                 @ColumnResult(name = "grid_energy_in", type = Double.class),
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
@@ -88,14 +119,44 @@ import java.time.LocalDateTime;
         }
 )
 @NamedNativeQuery(
+        name = "SelectTotalsByYearMonth",
+        query = """
+                select
+                    sum(grid_energy_in) as grid_energy_in,
+                    sum(grid_energy_out) as grid_energy_out,
+                    sum(pv_energy_in) as pv_energy_in,
+                    sum(pv_energy_out) as pv_energy_out
+                from
+                    hourly_em_energy
+                where
+                    year(from_timestamp) = year(to_date(:filterDate,'yyyy-MM-dd')) and
+                    month(from_timestamp) = month(to_date(:filterDate,'yyyy-MM-dd'))
+                """,
+        resultSetMapping = "SelectTotalsByYearMonthMapping"
+)
+@SqlResultSetMapping(
+        name = "SelectTotalsByYearMonthMapping",
+        classes = {
+                @ConstructorResult(
+                        columns = {
+                                @ColumnResult(name = "grid_energy_in", type = Double.class),
+                                @ColumnResult(name = "grid_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_in", type = Double.class),
+                                @ColumnResult(name = "pv_energy_out", type = Double.class),
+                        },
+                        targetClass = EnergyTotals.class
+                )
+        }
+)
+@NamedNativeQuery(
         name = "SelectMonthlyAggregateByYear",
         query = """
                 select
                     month(from_timestamp) as month,
-                    sum(grid_energy_in)/1000 as grid_energy_in,
-                    sum(grid_energy_out)/1000 as grid_energy_out,
-                    sum(pv_energy_in)/1000 as pv_energy_in,
-                    sum(pv_energy_out)/1000 as pv_energy_out
+                    sum(grid_energy_in) as grid_energy_in,
+                    sum(grid_energy_out) as grid_energy_out,
+                    sum(pv_energy_in) as pv_energy_in,
+                    sum(pv_energy_out) as pv_energy_out
                 from
                     hourly_em_energy
                 where
@@ -123,13 +184,42 @@ import java.time.LocalDateTime;
         }
 )
 @NamedNativeQuery(
+        name = "SelectTotalsByYear",
+        query = """
+                select
+                    sum(grid_energy_in) as grid_energy_in,
+                    sum(grid_energy_out) as grid_energy_out,
+                    sum(pv_energy_in) as pv_energy_in,
+                    sum(pv_energy_out) as pv_energy_out
+                from
+                    hourly_em_energy
+                where
+                    year(from_timestamp) = year(to_date(:filterDate,'yyyy-MM-dd'))
+                """,
+        resultSetMapping = "SelectTotalsByYearMapping"
+)
+@SqlResultSetMapping(
+        name = "SelectTotalsByYearMapping",
+        classes = {
+                @ConstructorResult(
+                        columns = {
+                                @ColumnResult(name = "grid_energy_in", type = Double.class),
+                                @ColumnResult(name = "grid_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_in", type = Double.class),
+                                @ColumnResult(name = "pv_energy_out", type = Double.class),
+                        },
+                        targetClass = EnergyTotals.class
+                )
+        }
+)
+@NamedNativeQuery(
         name = "SelectTotals",
         query = """
                 select
-                    sum(grid_energy_in)/1000 as grid_energy_in,
-                    sum(grid_energy_out)/1000 as grid_energy_out,
-                    sum(pv_energy_in)/1000 as pv_energy_in,
-                    sum(pv_energy_out)/1000 as pv_energy_out
+                    sum(grid_energy_in) as grid_energy_in,
+                    sum(grid_energy_out) as grid_energy_out,
+                    sum(pv_energy_in) as pv_energy_in,
+                    sum(pv_energy_out) as pv_energy_out
                 from
                     hourly_em_energy
                 """,

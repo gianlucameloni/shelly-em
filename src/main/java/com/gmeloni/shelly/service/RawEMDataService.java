@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class RawEMService {
+public class RawEMDataService {
 
-    private static final Logger log = LoggerFactory.getLogger(RawEMService.class);
+    private static final Logger log = LoggerFactory.getLogger(RawEMDataService.class);
 
     @Autowired
     private RestTemplate restTemplate;

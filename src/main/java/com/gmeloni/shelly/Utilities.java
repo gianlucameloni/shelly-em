@@ -52,6 +52,9 @@ public class Utilities {
     }
 
     public static String padLeftWithZeros(String inputString, int length) {
+        if (inputString == null) {
+            return null;
+        }
         if (inputString.length() >= length) {
             return inputString;
         }
