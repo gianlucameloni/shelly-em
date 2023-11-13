@@ -58,7 +58,8 @@ import java.time.LocalDateTime;
                     sum(grid_energy_in) as grid_energy_in,
                     sum(grid_energy_out) as grid_energy_out,
                     sum(pv_energy_in) as pv_energy_in,
-                    sum(pv_energy_out) as pv_energy_out
+                    sum(pv_energy_out) as pv_energy_out,
+                    sum(pv_energy_out) - sum(grid_energy_out) as pv_energy_consumed
                 from
                     hourly_em_energy
                 where
@@ -77,6 +78,7 @@ import java.time.LocalDateTime;
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
                                 @ColumnResult(name = "pv_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_consumed", type = Double.class),
                         },
                         targetClass = EnergyTotals.class
                 )
@@ -112,7 +114,7 @@ import java.time.LocalDateTime;
                                 @ColumnResult(name = "grid_energy_in", type = Double.class),
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
-                                @ColumnResult(name = "pv_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_out", type = Double.class)
                         },
                         targetClass = DailyAggregate.class
                 )
@@ -125,7 +127,8 @@ import java.time.LocalDateTime;
                     sum(grid_energy_in) as grid_energy_in,
                     sum(grid_energy_out) as grid_energy_out,
                     sum(pv_energy_in) as pv_energy_in,
-                    sum(pv_energy_out) as pv_energy_out
+                    sum(pv_energy_out) as pv_energy_out,
+                    sum(pv_energy_out) - sum(grid_energy_out) as pv_energy_consumed
                 from
                     hourly_em_energy
                 where
@@ -143,6 +146,7 @@ import java.time.LocalDateTime;
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
                                 @ColumnResult(name = "pv_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_consumed", type = Double.class)
                         },
                         targetClass = EnergyTotals.class
                 )
@@ -177,7 +181,7 @@ import java.time.LocalDateTime;
                                 @ColumnResult(name = "grid_energy_in", type = Double.class),
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
-                                @ColumnResult(name = "pv_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_out", type = Double.class)
                         },
                         targetClass = MonthlyAggregate.class
                 )
@@ -190,7 +194,8 @@ import java.time.LocalDateTime;
                     sum(grid_energy_in) as grid_energy_in,
                     sum(grid_energy_out) as grid_energy_out,
                     sum(pv_energy_in) as pv_energy_in,
-                    sum(pv_energy_out) as pv_energy_out
+                    sum(pv_energy_out) as pv_energy_out,
+                    sum(pv_energy_out) - sum(grid_energy_out) as pv_energy_consumed
                 from
                     hourly_em_energy
                 where
@@ -207,6 +212,7 @@ import java.time.LocalDateTime;
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
                                 @ColumnResult(name = "pv_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_consumed", type = Double.class)
                         },
                         targetClass = EnergyTotals.class
                 )
@@ -219,7 +225,8 @@ import java.time.LocalDateTime;
                     sum(grid_energy_in) as grid_energy_in,
                     sum(grid_energy_out) as grid_energy_out,
                     sum(pv_energy_in) as pv_energy_in,
-                    sum(pv_energy_out) as pv_energy_out
+                    sum(pv_energy_out) as pv_energy_out,
+                    sum(pv_energy_out) - sum(grid_energy_out) as pv_energy_consumed
                 from
                     hourly_em_energy
                 """,
@@ -234,6 +241,7 @@ import java.time.LocalDateTime;
                                 @ColumnResult(name = "grid_energy_out", type = Double.class),
                                 @ColumnResult(name = "pv_energy_in", type = Double.class),
                                 @ColumnResult(name = "pv_energy_out", type = Double.class),
+                                @ColumnResult(name = "pv_energy_consumed", type = Double.class)
                         },
                         targetClass = EnergyTotals.class
                 )

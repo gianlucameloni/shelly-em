@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.gmeloni</groupId>
     <artifactId>shelly</artifactId>
-    <version>1.3.1</version>
+    <version>1.3.2</version>
     <name>shelly</name>
     <description>Shelly EM Sampling and Processing Tool</description>
     <properties>

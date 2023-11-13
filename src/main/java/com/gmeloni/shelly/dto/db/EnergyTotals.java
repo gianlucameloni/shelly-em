@@ -18,13 +18,16 @@ public class EnergyTotals {
     private String pvEnergyIn;
     @JsonProperty("pv_energy_out")
     private String pvEnergyOut;
+    @JsonProperty("pv_energy_consumed")
+    private String pvEnergyConsumed;
 
-    public EnergyTotals(Double gridEnergyIn, Double gridEnergyOut, Double pvEnergyIn, Double pvEnergyOut) {
+    public EnergyTotals(Double gridEnergyIn, Double gridEnergyOut, Double pvEnergyIn, Double pvEnergyOut, Double pvEnergyConsumed) {
         DecimalFormat dataFormat = new DecimalFormat(ENERGY_DECIMAL_FORMAT);
         this.gridEnergyIn = gridEnergyIn == null ? ENERGY_DECIMAL_FORMAT : dataFormat.format(gridEnergyIn);
         this.gridEnergyOut = gridEnergyOut == null ? ENERGY_DECIMAL_FORMAT : dataFormat.format(gridEnergyOut);
         this.pvEnergyIn = pvEnergyIn == null ? ENERGY_DECIMAL_FORMAT : dataFormat.format(pvEnergyIn);
         this.pvEnergyOut = pvEnergyOut == null ? ENERGY_DECIMAL_FORMAT : dataFormat.format(pvEnergyOut);
+        this.pvEnergyConsumed = pvEnergyConsumed == null ? ENERGY_DECIMAL_FORMAT : dataFormat.format(pvEnergyConsumed);
     }
 
 }
