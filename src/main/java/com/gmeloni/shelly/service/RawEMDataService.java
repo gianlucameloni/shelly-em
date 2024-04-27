@@ -1,6 +1,7 @@
 package com.gmeloni.shelly.service;
 
 import com.gmeloni.shelly.dto.rest.GetEMStatusResponse;
+import com.gmeloni.shelly.dto.rest.GetProEMStatusResponse;
 import com.gmeloni.shelly.model.RawEMData;
 import com.gmeloni.shelly.repository.RawEMDataRepository;
 import org.slf4j.Logger;
@@ -21,9 +22,15 @@ public class RawEMDataService {
     private RawEMDataRepository rawEMDataRepository;
     @Value("${shelly.em.ip}")
     private String shellyEMAddress;
+    @Value("${shelly.pro.em.ip}")
+    private String shellyProEMAddress;
 
     public GetEMStatusResponse getRawEMSamples() {
         return restTemplate.getForObject("http://" + shellyEMAddress + "/status", GetEMStatusResponse.class);
+    }
+
+    public GetProEMStatusResponse getProRawEMSamples() {
+        return restTemplate.getForObject("http://" + shellyProEMAddress + "rpc/Shelly.GetStatus", GetProEMStatusResponse.class);
     }
 
     public RawEMData getLastReading() {

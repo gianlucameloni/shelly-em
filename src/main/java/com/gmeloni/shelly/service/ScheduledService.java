@@ -1,6 +1,7 @@
 package com.gmeloni.shelly.service;
 
 import com.gmeloni.shelly.dto.rest.GetEMStatusResponse;
+import com.gmeloni.shelly.dto.rest.GetProEMStatusResponse;
 import com.gmeloni.shelly.model.HourlyEMEnergy;
 import com.gmeloni.shelly.model.RawEMData;
 import com.gmeloni.shelly.repository.HourlyEMEnergyRepository;
@@ -41,15 +42,18 @@ public class ScheduledService {
 
     @Scheduled(fixedRateString = "${raw-em.sampling.period.milliseconds}")
     public void processRawEMData() {
-        GetEMStatusResponse getEMStatusResponse = rawEMDataService.getRawEMSamples();
+        GetEMStatusResponse shellyEMStatusResponse = rawEMDataService.getRawEMSamples();
         LocalDateTime sampleDateTime = LocalDateTime.ofInstant(
-                Instant.ofEpochSecond(getEMStatusResponse.getUnixTime()),
+                Instant.ofEpochSecond(shellyEMStatusResponse.getUnixTime()),
                 TimeZone.getTimeZone("Europe/Rome").toZoneId()
         );
-        Double gridPower = getEMStatusResponse.getRawEMSamples().get(0).getPower();
-        Double pvPower = getEMStatusResponse.getRawEMSamples().get(1).getPower();
-        Double gridVoltage = getEMStatusResponse.getRawEMSamples().get(0).getVoltage();
-        Double pvVoltage = getEMStatusResponse.getRawEMSamples().get(1).getVoltage();
+        Double gridPower = shellyEMStatusResponse.getRawEMSamples().get(0).getPower();
+        // Double pvPower = shellyEMStatusResponse.getRawEMSamples().get(1).getPower();
+        Double gridVoltage = shellyEMStatusResponse.getRawEMSamples().get(0).getVoltage();
+        // Double pvVoltage = shellyEMStatusResponse.getRawEMSamples().get(1).getVoltage();
+        GetProEMStatusResponse shellyProEMStatusResponse = rawEMDataService.getProRawEMSamples();
+        Double pvPower = shellyProEMStatusResponse.getRawProEMSampleId0().getPower() + shellyProEMStatusResponse.getRawProEMSampleId1().getPower();
+        Double pvVoltage = shellyProEMStatusResponse.getRawProEMSampleId0().getVoltage();
         RawEMData rawEmData = new RawEMData(
                 sampleDateTime,
                 gridPower,
