@@ -1,7 +1,7 @@
 package com.gmeloni.shelly.service;
 
-import com.gmeloni.shelly.dto.rest.GetEMStatusResponse;
-import com.gmeloni.shelly.dto.rest.GetProEMStatusResponse;
+import com.gmeloni.shelly.dto.rest.GetShellyEMStatusResponse;
+import com.gmeloni.shelly.dto.rest.GetShellyProEMStatusResponse;
 import com.gmeloni.shelly.model.RawEMData;
 import com.gmeloni.shelly.repository.RawEMDataRepository;
 import org.slf4j.Logger;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class RawEMDataService {
@@ -20,17 +22,17 @@ public class RawEMDataService {
     private RestTemplate restTemplate;
     @Autowired
     private RawEMDataRepository rawEMDataRepository;
-    @Value("${shelly.em.ip}")
-    private String shellyEMAddress;
-    @Value("${shelly.pro.em.ip}")
-    private String shellyProEMAddress;
 
-    public GetEMStatusResponse getRawEMSamples() {
-        return restTemplate.getForObject("http://" + shellyEMAddress + "/status", GetEMStatusResponse.class);
+    public GetShellyEMStatusResponse getShellyEMRawSamples(
+            String shellyEMIpAddress
+    ) {
+        return restTemplate.getForObject("http://" + shellyEMIpAddress + "/status", GetShellyEMStatusResponse.class);
     }
 
-    public GetProEMStatusResponse getProRawEMSamples() {
-        return restTemplate.getForObject("http://" + shellyProEMAddress + "rpc/Shelly.GetStatus", GetProEMStatusResponse.class);
+    public GetShellyProEMStatusResponse getShellyProEMRawSamples(
+            String shellyProEMIpAddress
+    ) {
+        return restTemplate.getForObject("http://" + shellyProEMIpAddress + "/rpc/Shelly.GetStatus", GetShellyProEMStatusResponse.class);
     }
 
     public RawEMData getLastReading() {
